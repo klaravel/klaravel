@@ -167,6 +167,15 @@ return [
          * Package Service Providers...
          */
         Laravel\Tinker\TinkerServiceProvider::class,
+        Laravel\Socialite\SocialiteServiceProvider::class,
+        Laracasts\Flash\FlashServiceProvider::class,
+        Klaravel\Settings\ServiceProvider::class,
+        Klaravel\DbLogger\ServiceProvider::class,
+        Klaravel\Modules\ModulesServiceProvider::class,
+        Klaravel\Ntrust\NtrustServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+        Indal\Markdown\MarkdownServiceProvider::class,
+        Cviebrock\EloquentSluggable\ServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -226,6 +235,12 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        'Module' => Klaravel\Modules\Facades\Module::class,
+        'Ntrust' => Klaravel\Ntrust\NtrustFacade::class,
+        'Setting' => Klaravel\Settings\SettingsFacade::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        'Markdown' => Indal\Markdown\Facade::class,
     ],
 
 ];

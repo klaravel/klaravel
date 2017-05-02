@@ -4,7 +4,9 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Session\TokenMismatchException;
 
 class Handler extends ExceptionHandler
 {
@@ -44,6 +46,42 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        /**
+         * Model not found
+         */
+        if($exception instanceof ModelNotFoundException){
+
+            if (request()->ajax()){
+                return \Response::json(array(
+                        'redirect' => route('404')
+                    ), 200);
+            }
+
+            return abort(404);
+        }
+
+        /**
+         * TokenMismatchException error handle and send user 
+         * back to same form.
+         */
+        if ($exception instanceof TokenMismatchException)
+        {
+            //redirect to a form. Here is an example of how I handle mine
+            flash('Opps! Seems you couldn\'t submit form for a longtime.<br/>Please try again.', 'warning');
+
+            if (request()->ajax()){
+                return \Response::json(array(
+                        'redirect' => $request->fullUrl()
+                    ), 200);
+            } 
+
+            return redirect($request->fullUrl());
+        }
+
+        if ($exception instanceof \Illuminate\Auth\Access\UnauthorizedException)  {
+            return response()->view('errors.403');
+        }
+
         return parent::render($request, $exception);
     }
 
@@ -58,6 +96,10 @@ class Handler extends ExceptionHandler
     {
         if ($request->expectsJson()) {
             return response()->json(['error' => 'Unauthenticated.'], 401);
+        }
+
+        if ( in_array('admin', $exception->guards()) ) {
+            return redirect()->route('admin.login');
         }
 
         return redirect()->guest(route('login'));

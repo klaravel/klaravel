@@ -6,8 +6,19 @@
     "type": "project",
     "require": {
         "php": ">=5.6.4",
+        "andreasindal/laravel-markdown": "^1.1",
+        "barryvdh/laravel-debugbar": "^2.3",
+        "cviebrock/eloquent-sluggable": "^4.2",
+        "kalnoy/nestedset": "^4.2",
+        "klaravel/db-logger": "^1.0",
+        "klaravel/ntrust": "^1.1",
+        "klaravel/settings": "^1.0",
+        "laracasts/flash": "^2.0",
         "laravel/framework": "5.4.*",
-        "laravel/tinker": "~1.0"
+        "laravel/socialite": "^3.0",
+        "laravel/tinker": "~1.0",
+        "maatwebsite/excel": "~2.1.0",
+        "klaravel/modules": "@dev"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -24,9 +35,16 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
+            "Tests\\": "tests/",
+            "Modules\\": "Modules/"
         }
     },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "/home/vagrant/Code/KLaravel/modules"
+        }
+    ],
     "scripts": {
         "post-root-package-install": [
             "php -r \"file_exists('.env') || copy('.env.example', '.env');\""
